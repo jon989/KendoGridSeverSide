@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Demol Table</title>
+    <script src="~/jquery-2.1.1.min.js"></script>
+    <script src="~/kendo.all.min.js"></script>
+    <link href="~/kendo.common.min.css" rel="stylesheet" />
+    <link href="~/kendo.dataviz.default.min.css" rel="stylesheet" />
+    <link href="~/kendo.dataviz.min.css" rel="stylesheet" />
+    <link href="~/kendo.default.min.css" rel="stylesheet" />
+
+    
+    <script>
+        $(document).ready(function () {
+            $("#grid").kendoGrid({
+                dataSource: {
+                    type: "json",
+                    transport: {
+                        read:{
+                            url: "/Orders",
+                            dataType: "JSON"
+                        }
+                        
+                    },
+                    pageSize: 10,
+                    serverPaging: true,
+                    serverFiltering: true,
+                    serverSorting: true,
+                    schema: {
+                        data: function (data) {
+                            return data.results;
+                        }
+                    }
+                },
+                height: 550,
+                groupable: true,
+                sortable: true,
+                pageable: {
+                    refresh: true,
+                    pageSizes: true,
+                    buttonCount: 5
+                },
+                filterable: true,
+                columns: [
+                        { field: "carrierTrackingNumber", title: "Tracking #" },
+                        { field: "orderQty", title: "Quantity" },
+                        { field: "productID", title: "Product Id" },
+                        { field: "specialOfferID", title: "Special Offer Id" },
+                        { field: "unitPrice", title: "Price" },
+                        { field: "unitPriceDiscount", title: "Discount" },
+                        { field: "lineTotal", title: "Line Total", footerTemplate: "Sum = {{sum}} " },
+                        { field: "rowguid", hidden: true },
+                        { field: "modifiedDate", title: " Date" }
+                ]
+            });
+        });
+    </script>
+
+    </head>
+    <body>
+            <div id="example">
+                <div id="grid"></div>
+
+            </div>
+    </body>
+    </html>
